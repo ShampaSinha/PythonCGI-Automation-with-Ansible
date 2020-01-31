@@ -1,0 +1,47 @@
+#!/usr/bin/python36
+print("content-type:text/html")
+print()
+
+
+
+################### CODE SNIPPET TO MOUNT DRIVE ON ANY MOUNT POINT  #########################
+# import subprocess
+#
+# try:
+#     d = subprocess.call(['mount', '/dev/sr0', '/dvdew'])
+#     if d == 0:
+#         print("mounted")
+# except Exception as ex:
+    # print(ex)
+
+############################################################################################
+
+
+
+
+
+
+# print('''
+# <form>
+#     NAME: <input type='text' name='name' /><br>
+#     SIZE: <input type='text' name='size' />
+#     <br><br>
+#     <input type='submit' value='getoutput' />
+# </form>
+# ''')
+#
+#
+# import subprocess
+# import cgi
+# webdata = cgi.FieldStorage()
+# name = webdata.getvalue('name')
+# size = webdata.getvalue('size')
+#
+#
+#
+#
+#
+# if(name != None and size != None):
+#     pass
+# else:
+#     print("**   all fields are required")
