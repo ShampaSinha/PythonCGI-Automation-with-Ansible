@@ -1,0 +1,31 @@
+#!/usr/bin/python36
+print('content-type:text/html')
+print()
+
+import subprocess
+
+subprocess.getoutput("chmod -R +x *")
+
+print("<h1>User Management</h1>")
+
+userdata = subprocess.getoutput("sudo cat /etc/passwd").strip().split('\n')
+
+
+for i in userdata:
+    i = i.split(':')
+    try:
+        if int(i[2]) >= 1000 or i[2] == '0' :
+            print("<form action='./../Basics/user_change.py'>")
+            print('''
+            Name:   <input type='text' name='name' value={0} />  <br>
+            UID:  <input type='text' name='uid' value={2} /><br>
+            GID:  <input type='text' name='gid' value={3} /><br>
+            Comment: <input type='text' name='comment' value="{4}" /> <br>
+            Home:  <input type='text' name='home' value={5} /> <br>
+            Shell: <input type='text' name='shell' value={6} /> <br>
+            '''.format(*i))
+            print("<br><input type='submit' value='save changes' />")
+            print("</form>")
+            print("<hr><br>")
+    except:
+        pass

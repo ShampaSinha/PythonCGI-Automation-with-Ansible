@@ -1,0 +1,17 @@
+#!/usr/bin/python36
+print('content-type:text/html')
+print()
+
+import subprocess
+
+subprocess.getoutput("sudo chmod -R +x *")
+
+import subprocess
+dir = subprocess.getoutput("ls -l | egrep '^d' | awk '{print $9}' ").split('\n')
+
+print("<ul>")
+for i in dir:
+    print('''
+    <li><a href='./{0}/list'> {0} </a></li><br>
+    '''.format(i))
+print("</ul>")

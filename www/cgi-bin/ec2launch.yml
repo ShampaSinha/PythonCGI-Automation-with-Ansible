@@ -1,0 +1,10 @@
+- hosts: localhost
+  tasks: 
+      - ec2: 
+          aws_access_key: "{{ akey }}"
+          aws_secret_key: " {{ skey  }}"
+          region: "ap-south-1"
+          key_name: "pooja1234"
+          instance_type: "t2.micro"
+          image: "ami-5b673c34"
+                 

@@ -1,0 +1,45 @@
+#!/usr/bin/python36
+print('content-type:text/html')
+print()
+
+import subprocess
+
+subprocess.getoutput("chmod -R +x *")
+
+print("<h1>Process Management</h1>")
+
+proc_data = subprocess.getoutput("sudo ps -a").strip().split('\n')
+head = proc_data[0]
+proc_data = proc_data[1:]
+
+# print(head.split())
+
+
+
+print("<table style='width:100%'>")
+print('''
+<tr>
+    <th> {} </th>
+    <th> {} </th>
+    <th> {} </th>
+    <th> {} </th>
+    <th> Kill me </th>
+</tr>
+'''.format(*head.split()))
+
+for i in proc_data:
+    print('''
+    <tr>
+        <td> <center> {} </center> </td>
+        <td> <center> {} </center> </td>
+        <td> <center> {} </center> </td>
+        <td> <center> {} </center> </td>
+        <td> <center><a href=""> kill  </a> </center> </td>
+    </tr>
+    '''.format(*i.split()))
+
+print("</table>")
+
+
+
+print("<hr><br>")

@@ -1,0 +1,21 @@
+#!/usr/bin/python36
+print("content-type:text/html")
+print()
+
+
+print('''
+<form>
+    <textarea rows=40 cols=200 name='code'>
+    </textarea><br><br>
+    <input type='submit' value='getoutput' />
+</form>
+''')
+
+
+import subprocess
+import cgi
+webdata = cgi.FieldStorage()
+code = webdata.getvalue('code')
+if code != None:
+    output = subprocess.getoutput("sudo echo \"{0}\" > try.py && sudo chmod +x try.py && sudo python36 try.py".format(code))
+    print("<hr><br>OUTPUT<br><br>"+output)
