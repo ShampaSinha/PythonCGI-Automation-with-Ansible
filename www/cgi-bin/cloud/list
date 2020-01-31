@@ -1,0 +1,15 @@
+#!/usr/bin/python36
+print("content-type:text/html")
+print()
+
+import subprocess
+l = subprocess.getoutput("ls").split('\n')
+l = [k for k in l if k != 'list' and '.py' not in k]
+
+
+print("<ul>")
+for i in l:
+    print('''
+    <li><a href='./{0}'> {0} </a></li>
+    '''.format(i))
+print("</ul>")

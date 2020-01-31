@@ -1,14 +1,59 @@
 #!/usr/bin/python36
-print("content-type:text/html")
-print()
+print("content-type:text/html\n\r\n\r")
 
 import subprocess
-l = subprocess.getoutput("ls").split('\n')
-l = [i for i in l if i != 'list' and '.py' in i]
 
-print("<ul>")
-for i in l:
+print("<center> microworld </center>")
+
+
+
+
+vm_ip_list = subprocess.getoutput("""sudo nmap -sP $(hostname -I|awk '{print $1}'| awk -F"." '{print $1"."$2"."$3".1/24"}') | grep 'report' |awk '{print $5}'""").split('\n')
+
+docker_ip_list = subprocess.getoutput(""" sudo docker ps -q | sudo xargs -n 1 docker inspect --format '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}} {{.Name }}' | sudo sed 's/\// /' """).split('\n')
+
+print("<br><br><br><center>")
+
+hosts = open('/var/www/ansible/hosts','w')
+
+hosts.write("[VM]\n")
+for ip in vm_ip_list:
+    if('192.168.43.1' in ip or '192.168.43.22' in ip): ## removing the gateway and windows ps
+        pass
+    else:
+        hosts.write(str(ip)+'\n')
+
+hosts.write("[container]\n")
+for ip in docker_ip_list:
+    hosts.write(str(ip.split()[0])+'\n')
+
+
+
+
+print("\n Connected VMs \n")
+for ip in vm_ip_list:
+    if('192.168.43.1' in ip or '192.168.43.22' in ip): ## removing the gateway and windows ps
+        pass
+    else:
+        print('''
+        <li> <a href='http://{0}/'> {0} </a> </li>
+        '''.format(ip))
+        hosts.write("[{0}]\n{1}\n".format(ip.replace('.', '_'), ip))
+
+
+print("\n connected dockers \n")
+for ip in docker_ip_list:
     print('''
-    <li><a href=''> {0} </a></li>
-    '''.format(i))
-print("</ul>")
+    <li> <a href='http://{0}/'> {0} </a> </li>
+    '''.format(ip.split()[0]))
+    hosts.write("[{1}]\n{0}\n".format(*ip.split()))
+
+
+
+
+
+print("</center>")
+
+hosts.close()
+
+subprocess.getoutput("chmod -R +x *")
